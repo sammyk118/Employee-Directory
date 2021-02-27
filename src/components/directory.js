@@ -11,7 +11,7 @@ function Directory(props) {
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Age</th>
+                    <th scope="col">DOB</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,14 +24,13 @@ function Directory(props) {
                             image={employee.picture}
                             title={employee.name.title}
                             number={employee.phone}
-                            birthday={employee.dob.date}
+                            birthday={employee.dob.date.substring(0, 10)}
                             age={employee.dob.age}
                             key={index}
                             id={index}
                         />
                     )
-                })
-                }
+                })}
             </tbody>
         </table>
     )

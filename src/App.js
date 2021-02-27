@@ -14,13 +14,32 @@ function App() {
       .then(res => {
         console.log("api content: ", res.data.results)
         setEmployees(res.data.results)
+        setFilter(res.data.results)
       })
   };
 
   const handleInputChange = event => {
     const { value } = event.target;
     setSearch(value);
+    updateTable(value);
   }
+
+  const updateTable = (val) => {
+    val = val.toLowerCase();
+    console.log(val);
+  
+    let newArr = [];
+    employees.filter(emp => {
+      let empVal = emp.name.first.toLowerCase();
+      if (empVal.match(val)) { 
+        console.log(emp.name.first)
+        newArr.push(emp)
+      }  
+    })
+    setFilter(newArr);
+    //filter list built by filter map through employee list
+
+}
 
   return (
     <div className="App">
@@ -45,7 +64,7 @@ function App() {
           <h3>{employeeSearch}</h3>
         </div>
         <div className="row">
-          <Directory employees={employees} />
+          <Directory employees={filteredEmp} />
         </div>
       </div>
 
