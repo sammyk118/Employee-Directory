@@ -26,13 +26,10 @@ function App() {
 
   const updateTable = (val) => {
     val = val.toLowerCase();
-    console.log(val);
-  
     let newArr = [];
     employees.filter(emp => {
       let empVal = emp.name.first.toLowerCase();
       if (empVal.match(val)) { 
-        console.log(emp.name.first)
         newArr.push(emp)
       }  
     })
