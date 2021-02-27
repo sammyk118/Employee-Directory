@@ -1,8 +1,8 @@
 import axios from "axios";
-const url = "https://randomuser.me/api/?inc=gender,name,email,picture";
+
 
 export default {
     search: function () {
-        return axios.get(url);
+        return axios.get("https://randomuser.me/api/?results=50&inc=gender,name,email,picture");
     }
 }

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Component }from "react";
+import API from "./utils/API";
 import './App.css';
-import Directory from "./pages/directory";
-import Search from "./pages/search";
+import Directory from "./components/directory";
+import SearchForm from "./components/searchForm";
 
 class App extends React.Component{
   state = {
@@ -9,7 +10,11 @@ class App extends React.Component{
   };
 
   componentDidMount() {
-    
+    API.search()
+      .then(res => {
+        console.log("api content: ", res.data.results)
+      this.setState({employees: res.data.results})
+    })
   }
 
   render() {
