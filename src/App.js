@@ -14,6 +14,8 @@ function App() {
 
   useEffect(() => {
     employeeGet();
+    setAgeToggle()
+    setNameToggle();
   }, [])
 
   const employeeGet = () => {
@@ -46,15 +48,22 @@ function App() {
   function handleSort(type) {
     console.log("sort entered")
     if (type === "age") {
-      let sortedVal = filteredEmp.sort((a, b) => {
+      console.log("age: ", ageToggler)
+      setAgeToggle()
+      let sortedVal = employees.sort((a, b) => {
         return a.dob.age - b.dob.age;
       })
       console.log("sorted var: ", sortedVal)
-      console.log("sorted: ", filteredEmp)
-      setFilter(sortedVal)
+      if (ageToggler) {
+        sortedVal.reverse();
+        console.log("inverted age sort: ", sortedVal)
+      }
+      setEmployees(sortedVal)
     }
     if (type === "name") {
-      let sortedVal = filteredEmp.sort((a, b) => {
+      console.log("name: ", nameToggler)
+      setNameToggle();
+      let sortedVal = employees.sort((a, b) => {
         var nameA = a.name.first.toUpperCase();
         var nameB = b.name.first.toUpperCase();
         if (nameA < nameB) {
@@ -66,7 +75,11 @@ function App() {
         return 0;
       })
       console.log("sorted var: ", sortedVal)
-      setFilter(sortedVal)
+      if (nameToggler) {
+        sortedVal.reverse();
+        console.log("sorted inverted name: ", sortedVal)
+      }
+      setEmployees(sortedVal)
     }
 
   }
