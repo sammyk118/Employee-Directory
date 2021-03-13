@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useToggle from "react-use-toggle"
 import API from "./utils/API";
 import './App.css';
 import Directory from "./components/directory";
@@ -8,6 +9,12 @@ function App() {
   const [employees, setEmployees] = useState([]);
   const [filteredEmp, setFilter] = useState([]);
   const [employeeSearch, setSearch] = useState([]);
+  const [nameToggler, setNameToggle] = useToggle([]);
+  const [ageToggler, setAgeToggle] = useToggle([]);
+
+  useEffect(() => {
+    employeeGet();
+  }, [])
 
   const employeeGet = () => {
     API.search()
@@ -23,20 +30,46 @@ function App() {
     setSearch(value);
     updateTable(value);
   }
-
   const updateTable = (val) => {
     val = val.toLowerCase();
     let newArr = [];
     employees.filter(emp => {
       let empVal = emp.name.first.toLowerCase();
-      if (empVal.match(val)) { 
+      if (empVal.match(val)) {
         newArr.push(emp)
-      }  
+      }
     })
     setFilter(newArr);
     //filter list built by filter map through employee list
+  }
 
-}
+  function handleSort(type) {
+    console.log("sort entered")
+    if (type === "age") {
+      let sortedVal = filteredEmp.sort((a, b) => {
+        return a.dob.age - b.dob.age;
+      })
+      console.log("sorted var: ", sortedVal)
+      console.log("sorted: ", filteredEmp)
+      setFilter(sortedVal)
+    }
+    if (type === "name") {
+      let sortedVal = filteredEmp.sort((a, b) => {
+        var nameA = a.name.first.toUpperCase();
+        var nameB = b.name.first.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      })
+      console.log("sorted var: ", sortedVal)
+      setFilter(sortedVal)
+    }
+
+  }
 
   return (
     <div className="App">
@@ -53,15 +86,12 @@ function App() {
               placeholder="Search For an Employee"
             />
           </div>
-          <button className="btn btn-warning"
-          onClick={employeeGet}>
-            Get employees</button>
         </div>
         <div className="row">
           <h3>{employeeSearch}</h3>
         </div>
         <div className="row">
-          <Directory employees={filteredEmp} />
+          <Directory employees={filteredEmp} sort={handleSort} />
         </div>
       </div>
 

@@ -6,6 +6,14 @@ function Directory(props) {
         <table className="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col"></th>
+                    <th scope="col"><button onClick={() => props.sort("name")}>Sort by Name</button></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"><button onClick={() => props.sort("age")}>Sort by Age</button></th>
+                </tr>
+                <tr>
                     <th scope="col">#</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
